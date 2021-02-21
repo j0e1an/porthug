@@ -19,7 +19,7 @@ porthug -d 10.0.0.0/24 -t -p 80 443 8080 5000-6000
   -u, --udp             Only compatible with some scans, UDP mode</p>
   -i, --icmp            Only compatible with some scans, ICMP-echo mode</p>
   -l [path_to_txt_file], --file [path_to_txt_file]
-                        input a host list using txt file, can be used in addition to -h</p>
+                        input a host list using txt file, can be used in addition to -d</p>
 
 <h1>Commands:</h1></p>
   -t, --tcp3way         TCP 3way handshake connection scan.</p>
