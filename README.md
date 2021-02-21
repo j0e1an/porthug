@@ -11,20 +11,20 @@ This is a project I did for my class. Feel free to use it or fork it to make it 
                [-u] [-i] [-l [path_to_txt_file]] [-v] [-h]
 </p>
 <h1>optional arguments:</h1></p>
-  -d HOSTS [HOSTS ...], --hosts HOSTS [HOSTS ...]</p>
+  -d HOSTS [HOSTS ...], --hosts HOSTS [HOSTS ...]
                         Host or hosts to be scanned, accept IP or range of IPs and FQDN. </p>Range example:
                         192.168.1.1-255, 192.168.1.0/24, 192.168.1.0/255.255.0.0 or 192.168.1.50 192.168.1.200</p>
-  -p PORTS [PORTS ...], --ports PORTS [PORTS ...]</p>
+  -p PORTS [PORTS ...], --ports PORTS [PORTS ...]
                         Specify ports for scanning, if all ports use -p-. Port range example: 1-100, 200-300, 500</p>
   -p-, --allports       Shortcut for all ports, do not use with -pexample: 1-100, 200-300, 500</p>
   -u, --udp             Only compatible with some scans, UDP mode</p>
   -i, --icmp            Only compatible with some scans, ICMP-echo mode</p>
-  -l [path_to_txt_file], --file [path_to_txt_file]</p>
+  -l [path_to_txt_file], --file [path_to_txt_file]
                         input a host list using txt file, can be used in addition to -h</p>
 
 <h1>Commands:</h1></p>
   -t, --tcp3way         TCP 3way handshake connection scan.</p>
-  -r {dns,tcp,udp}, --traceroute {dns,tcp,udp}</p>
+  -r {dns,tcp,udp}, --traceroute {dns,tcp,udp}
                         traceroute for either DNS, TCP or UDP.</p>
   -f, --fin             FIN scan.</p>
   -n, --null            NULL scan.</p>
