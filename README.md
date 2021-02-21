@@ -1,3 +1,11 @@
+# Porthug - multi-feaure port scanner
+
+## Introduction
+
+This is a project I did for my class. Feel free to use it or fork it to make it better. Scapy is used so make sure you have imported that in your python environment. 
+
+## Code Samples
+
 # porthug
 usage: porthug [-t] [-r {dns,tcp,udp}] [-f] [-n] [-a] [-aw] [-s] [-d HOSTS [HOSTS ...]] [-p PORTS [PORTS ...]] [-p-]
                [-u] [-i] [-l [path_to_txt_file]] [-v] [-h]
@@ -30,3 +38,8 @@ Commands:
 Others:
   -v, --version         show program's version number and exit
   -h, --help            show this help message and exit
+
+
+## Installation
+
+Just download and run it on python. Needs administrator right. Windows user please download latest dev version of scapy and follow the instruction from https://scapy.readthedocs.io/en/latest/installation.html#windows
