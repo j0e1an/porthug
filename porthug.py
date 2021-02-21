@@ -187,7 +187,7 @@ def icmp():
         if ans is not None:
             ans.summary(lambda s, r: r.sprintf("%IP.src% is alive"))
 
-
+# traceroute, allows tcp, udp and dns options
 def tracecrt(type):
     global host_list
     if type == 'dns':
