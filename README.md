@@ -15,7 +15,7 @@ porthug -d 10.0.0.0/24 -t -p 80 443 8080 5000-6000
                         192.168.1.1-255, 192.168.1.0/24, 192.168.1.0/255.255.0.0 or 192.168.1.50 192.168.1.200</p>
   -p PORTS [PORTS ...], --ports PORTS [PORTS ...]
                         Specify ports for scanning, if all ports use -p-. Port range example: 1-100, 200-300, 500</p>
-  -p-, --allports       Shortcut for all ports, do not use with -pexample: 1-100, 200-300, 500</p>
+  -p-, --allports       Shortcut for all ports, do not use with -p or you will just scan duplicated ports</p>
   -u, --udp             Only compatible with some scans, UDP mode</p>
   -i, --icmp            Only compatible with some scans, ICMP-echo mode</p>
   -l [path_to_txt_file], --file [path_to_txt_file]
