@@ -5,6 +5,7 @@
 This is a project I did for my class. Feel free to use it or fork it to make it better. Scapy is used so make sure you have imported that in your python environment. 
 
 ## Code Samples
+porthug -d 10.0.0.0/24 -t -p 80 443 8080 5000-6000
 <h1>usage:</h1> </p>porthug [-t] [-r {dns,tcp,udp}] [-f] [-n] [-a] [-aw] [-s] [-d HOSTS [HOSTS ...]] [-p PORTS [PORTS ...]] [-p-]
                [-u] [-i] [-l [path_to_txt_file]] [-v] [-h]
 </p>
