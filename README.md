@@ -2,28 +2,28 @@
 usage: porthug [-t] [-x] [-f] [-n] [-a] [-aw] [-s] [-d HOSTS [HOSTS ...]]
                [-p PORTS [PORTS ...]] [-p-] [-u] [-i] [-l [path_to_txt_file]]
                [-v] [-h]
-
+\n
 Welcome to Porthug, an advanced port scanner. Please see the usage below. If
-no command is selected, default TCP scan will be used.
+no command is selected, default TCP scan will be used.\n
 
-optional arguments:
+optional arguments:\n
   -d HOSTS [HOSTS ...], --hosts HOSTS [HOSTS ...]
                         Host or hosts to be scanned, accept IP or range of IPs
                         and FQDN. Range example: 192.168.1.1-255,
-                        192.168.1.0/24, 192.168.1.0/255.255.0.0 or
+                        192.168.1.0/24, 192.168.1.0/255.255.0.0 or\n
                         192.168.1.50 192.168.1.200
   -p PORTS [PORTS ...], --ports PORTS [PORTS ...]
                         Specify ports for scanning, if all ports use -p-. Port
-                        range example: 1-100, 200-300, 500
+                        range example: 1-100, 200-300, 500\n
   -p-, --allports       Shortcut for all ports, do not use with -pexample:
-                        1-100, 200-300, 500
-  -u, --udp             Only compatible with some scans, UDP mode
-  -i, --icmp            Only compatible with some scans, ICMP-echo mode
+                        1-100, 200-300, 500\n
+  -u, --udp             Only compatible with some scans, UDP mode\n
+  -i, --icmp            Only compatible with some scans, ICMP-echo mode\n
   -l [path_to_txt_file], --file [path_to_txt_file]
                         input a host list using txt file, can be used in
-                        addition to -h
+                        addition to -h\n
 
-Commands:
+Commands:\n
   -t, --tcp3way         TCP 3way handshake connection scan.
   -x, --xmas            Christmas scan.
   -f, --fin             FIN scan.
@@ -32,8 +32,7 @@ Commands:
   -aw, --window         TCP Windows scan.
   -s, --stealth         Stealth scan.
 
-Others:
+Others:\n
   -v, --version         show program's version number and exit
   -h, --help            show this help message and exit
 
-Process finished with exit code 0
