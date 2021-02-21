@@ -20,7 +20,7 @@ parser = argparse.ArgumentParser(add_help=False, prog='porthug',
                                              'below. If no command is selected, default TCP scan will be used.')
 command_group = parser.add_argument_group('Commands')
 other_group = parser.add_argument_group('Others')
-command_group.add_argument('-3', '--tcp3way', action='store_true', default='store_false',
+command_group.add_argument('-t', '--tcp3way', action='store_true',
                            help='TCP 3way handshake connection scan.')
 command_group.add_argument('-x', '--xmas', action='store_true',
                            help='Christmas scan.')
@@ -44,8 +44,10 @@ parser.add_argument('-p', '--ports', nargs="+",
 parser.add_argument('-p-', '--allports', action='store_true',
                     help='Shortcut for all ports, do not use with -p'
                          'example: 1-100, 200-300, 500')
-parser.add_argument('-u', '--udp', action='store_true', help='Only compatible with some scans, UDP mode')
-parser.add_argument('-i', '--icmp', action='store_true', help='Only compatible with some scans, ICMP-echo mode')
+parser.add_argument('-u', '--udp', action='store_true',
+                    help='Only compatible with some scans, UDP mode')
+parser.add_argument('-i', '--icmp', action='store_true',
+                    help='Only compatible with some scans, ICMP-echo mode')
 parser.add_argument('-l', '--file', metavar='path_to_txt_file', nargs='?', type=argparse.FileType('r'),
                     help='input a host list using txt file, can be used in addition to -h')
 other_group.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
@@ -108,9 +110,11 @@ def threeway():
     global host_list
     global port_list
     for host in host_list:
-        print('Here is the host to be scanned: ' + host)
+        open_count = 0
+        close_count = 0
+        # print('Here is the host to be scanned: ' + host)
         for port in port_list:
-            print('Here is the port to be scanned: ' + str(port))
+            # print('Here is the host to be scanned: ' + str(port))
             src_port = random.randint(1025, 65534)
             tcp_connect_scan_resp = sr1(IP(dst=host) / TCP(sport=src_port, dport=port, flags='S'), timeout=10,
                                         verbose=0)
@@ -120,25 +124,31 @@ def threeway():
                 if tcp_connect_scan_resp.getlayer(TCP).flags == 0x12:
                     sr1(IP(dst=host) / TCP(sport=src_port, dport=port, flags='R'), timeout=10, verbose=0)
                     print(f'{host}:{port} is open!!')
+                    open_count = open_count + 1
                 elif tcp_connect_scan_resp.getlayer(TCP).flags == 0x14:
-                    print(f'{host}:{port} is closed!!')
+                    close_count = close_count + 1
+        print('There are ' + str(close_count) + ' closed ports. ' + str(open_count) + ' opened ports in host ' + host)
 
 
 def udpscan():
     global host_list
     global port_list
     for host in host_list:
-        print('Here is the host to be scanned: ' + host)
+        close_count = 0
+        open_count = 0
+        # print('Here is the host to be scanned: ' + host)
         for port in port_list:
-            print('Here is the port to be scanned: ' + str(port))
+            # print('Here is the host to be scanned: ' + str(port))
             src_port = random.randint(1025, 65534)
             udp_scan_resp = sr1(IP(dst=host) / UDP(dport=port), timeout=10, verbose=0)
             if udp_scan_resp is None:
                 print(f'{host}:{port} might have been filtered.')
             elif udp_scan_resp.haslayer(UDP):
                 print(f'{host}:{port} is open!!')
+                open_count = open_count + 1
             else:
-                print(f'{host}:{port} is closed!!')
+                close_count = close_count + 1
+    print('There are ' + str(close_count) + ' closed ports. ' + str(open_count) + ' opened ports.' + host)
 
 
 def icmp():
@@ -148,8 +158,7 @@ def icmp():
         print('Here is the host to be scanned: ' + host)
         resp = sr1(
             IP(dst=str(host)) / ICMP(),
-            timeout=2,
-            verbose=0,
+            timeout=2, verbose=0,
         )
         if resp is None:
             print(f"{host} is down or not responding.")
@@ -162,31 +171,44 @@ def icmp():
             print(f"{host} is responding.")
             live_count += 1
 
-        print(f"{live_count}/{addresses.num_addresses} hosts are online.")
+        print(f"{live_count}/{host} hosts are online.")
 
 
 def checkport(ports):
     global port_check_status
+    check_digits = "\d{1,5}-\d{1,5}"
     for x in ports:
-        if re.match('\d-\d{1,5}', x):
+        if re.match(check_digits, x):
             y = re.split('-', x)
             k = eval('int(y[1]) + 1')
-            y = int(y[0])
-            for j in range(y, k):
-                port_list.append(j)
-        elif 1 <= int(x) <= 65535:
-            port_list.append(int(x))
-            port_check_status = True
+            g = int(y[0])
+            if 1 <= g <= 65535 and 1 <= int(y[1]) <= 65535:
+                for j in range(g, k):
+                    port_list.append(j)
+                port_check_status = True
+            else:
+                print('Your port range is off, please check.')
             # print(port_list)
+        elif re.match('/d', x):
+            y = len(x) + 1
+            if 1 <= int(x) <= 65535:
+                for j in range(x, y):
+                    port_list.append(j)
+                port_check_status = True
+            else:
+                print('Your port range is off, please check.')
         else:
             print('It doesn\'t look like you have valid port numbers, did you mean to use -p-?')
     # print(port_list)
 
 
 def start():
+    global port_check_status
+    global host_check_status
     if len(sys.argv) == 1:
         print("Please supply a command name, use --help for more info")
         parser.parse_args(['-h'])
+        exit()
     if args.hosts:
         # print('Here is your host: ' + str(args.hosts))
         checkhost(args.hosts)
@@ -201,6 +223,7 @@ def start():
         exit()
     if args.ports and args.allports:
         print('You can\'t use -p- with -p, try again.')
+        exit()
     elif args.ports:
         # print('Here is your ports: ' + str(args.ports))
         checkport(args.ports)
@@ -208,10 +231,20 @@ def start():
         # print('So you wanna get all ports')
         for x in range(1, 65536):
             port_list.append(x)
+            port_check_status = True
         # print(port_list)
     if args.tcp3way:
+        print('TCP called')
         if host_check_status and port_check_status:
             threeway()
+    if args.icmp:
+        print('ICMP called')
+        if host_check_status:
+            icmp()
+    if args.udp:
+        print('UDP called')
+        if host_check_status and port_check_status:
+            udpscan()
 
 
 if __name__ == "__main__":
