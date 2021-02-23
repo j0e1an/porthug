@@ -25,11 +25,11 @@ porthug -d 10.0.0.0/24 -t -p 80 443 8080 5000-6000
   -t, --tcp3way         TCP 3way handshake connection scan.</p>
   -r {dns,tcp,udp}, --traceroute {dns,tcp,udp}
                         traceroute for either DNS, TCP or UDP.</p>
-  -f, --fin             FIN scan.</p>
-  -n, --null            NULL scan.</p>
-  -a, --ack             ACK scan.</p>
-  -aw, --window         TCP Windows scan.</p>
-  -s, --stealth         Stealth scan.</p>
+  -f, --fin             FIN scan.(To be implemented)</p> 
+  -n, --null            NULL scan.(To be implemented)</p>
+  -a, --ack             ACK scan.(To be implemented)</p>
+  -aw, --window         TCP Windows scan.(To be implemented)</p>
+  -s, --stealth         Stealth scan.(To be implemented)</p>
 
 <h1>Others:</h1></p>
   -v, --version         show program's version number and exit</p>
